@@ -24,9 +24,9 @@
 # SOFTWARE.
 import socket
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import PyQt5.QtCore as QtCore
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+import PyQt4.QtCore as QtCore
 
 from electroncash.i18n import _
 from electroncash.network import DEFAULT_PORTS
