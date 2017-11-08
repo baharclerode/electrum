@@ -1,9 +1,9 @@
 import sys
 import os
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import PyQt5.QtCore as QtCore
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+import PyQt4.QtCore as QtCore
 
 from electroncash import Wallet, WalletStorage
 from electroncash.util import UserCancelled, InvalidPassword
@@ -94,9 +94,7 @@ def wizard_dialog(func):
 # WindowModalDialog must come first as it overrides show_error
 class InstallWizard(QDialog, MessageBoxMixin, BaseWizard):
 
-    accept_signal = pyqtSignal()
-    synchronized_signal = pyqtSignal(str)
-
+    
     def __init__(self, config, app, plugins, storage):
         BaseWizard.__init__(self, config, storage)
         QDialog.__init__(self, None)
@@ -107,8 +105,8 @@ class InstallWizard(QDialog, MessageBoxMixin, BaseWizard):
         self.plugins = plugins
         self.language_for_seed = config.get('language')
         self.setMinimumSize(600, 400)
-        self.accept_signal.connect(self.accept)
-        self.title = QLabel()
+        self.connect(self, QtCore.SIGNAL('accept'), self.accept)
+	self.title = QLabel()
         self.main_widget = QWidget()
         self.back_button = QPushButton(_("Back"), self)
         self.back_button.setText(_('Back') if self.can_go_back() else _('Cancel'))
@@ -412,9 +410,9 @@ class InstallWizard(QDialog, MessageBoxMixin, BaseWizard):
                     msg = _("Recovery successful")
                 else:
                     msg = _("No transactions found for this seed")
-                self.synchronized_signal.emit(msg)
-            self.synchronized_signal.connect(self.show_message)
-            t = threading.Thread(target = task)
+                self.emit(QtCore.SIGNAL('synchronized'), msg)
+            self.connect(self, QtCore.SIGNAL('synchronized'),self.show_message)
+	    t = threading.Thread(target = task)
             t.daemon = True
             t.start()
         else:
@@ -437,7 +435,7 @@ class InstallWizard(QDialog, MessageBoxMixin, BaseWizard):
         self.run(action)
 
     def terminate(self):
-        self.accept_signal.emit()
+        self.emit(QtCore.SIGNAL('accept'))
 
     def waiting_dialog(self, task, msg):
         self.please_wait.setText(MSG_GENERATING_WAIT)
