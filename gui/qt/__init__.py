@@ -88,7 +88,6 @@ class ElectrumGui:
         self.app.installEventFilter(self.efilter)
         self.timer = Timer()
         self.nd = None
-        self.network_updated_signal_obj = QNetworkUpdatedSignalObject()
         # init tray
         self.dark_icon = self.config.get("dark_icon", False)
         self.tray = QSystemTrayIcon(self.tray_icon(), None)
