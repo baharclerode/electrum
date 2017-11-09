@@ -169,9 +169,9 @@ class InstallWizard(QDialog, MessageBoxMixin, BaseWizard):
         wallet_folder = os.path.dirname(self.storage.path)
 
         def on_choose():
-            path, __ = QFileDialog.getOpenFileName(self, "Select your wallet file", wallet_folder)
+            path = unicode(QFileDialog.getOpenFileName(self, "Select your wallet file", wallet_folder))
             if path:
-                self.name_e.setText(unicode(path))
+                self.name_e.setText(path)
 
         def on_filename(filename):
             filename = unicode(filename)
