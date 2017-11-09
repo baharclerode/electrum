@@ -156,7 +156,7 @@ class ServerListWidget(QTreeWidget):
         # on 'enter' we show the menu
         pt = self.visualItemRect(item).bottomLeft()
         pt.setX(50)
-        self.customContextMenuRequested.emit(pt)
+        self.emit(SIGNAL('customContextMenuRequested(const PQoint&)'),pt)
 
     def update(self, servers, protocol, use_tor):
         self.clear()
@@ -172,8 +172,8 @@ class ServerListWidget(QTreeWidget):
 
         h = self.header()
         h.setStretchLastSection(False)
-        h.setSectionResizeMode(0, QHeaderView.Stretch)
-        h.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        h.setResizeMode(0, QHeaderView.Stretch)
+        h.setResizeMode(1, QHeaderView.ResizeToContents)
 
 
 class NetworkChoiceLayout(object):
