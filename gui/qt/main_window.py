@@ -387,7 +387,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
     def backup_wallet(self):
         path = self.wallet.storage.path
         wallet_folder = os.path.dirname(path)
-        filename, __ = QFileDialog.getSaveFileName(self, _('Enter a filename for the copy of your wallet'), wallet_folder)
+        filename = unicode (QFileDialog.getSaveFileName(self, _('Enter a filename for the copy of your wallet'), wallet_folder))
         if not filename:
             return
 
@@ -580,7 +580,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
     def getSaveFileName(self, title, filename, filter = ""):
         directory = self.config.get('io_dir', os.path.expanduser('~'))
         path = os.path.join( directory, filename )
-        fileName, __ = QFileDialog.getSaveFileName(self, title, path, filter)
+        fileName = unicode(QFileDialog.getSaveFileName(self, title, path, filter))
         if fileName and directory != os.path.dirname(fileName):
             self.config.set_key('io_dir', os.path.dirname(fileName), True)
         return str(fileName)
