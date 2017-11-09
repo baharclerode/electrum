@@ -70,7 +70,7 @@ class NodesListWidget(QTreeWidget):
         item = self.currentItem()
         if not item:
             return
-        is_server = not bool(item.data(0, Qt.UserRole))
+        is_server = not bool(item.data(0, Qt.UserRole).toInt()[0])
         menu = QMenu()
         if is_server:
             server = unicode(item.data(1, Qt.UserRole).toString())
